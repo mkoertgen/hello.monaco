@@ -1,0 +1,50 @@
+﻿@page "/posts"
+@using System.Text.Json.Serialization
+@using System.Diagnostics.CodeAnalysis
+@inject HttpClient Http
+
+<h3>Blog Post</h3>
+
+@if (!_posts.Any())
+{
+  <p>
+    <em>Loading...</em>
+  </p>
+}
+else
+{
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var post in _posts)
+    {
+      <tr>
+        <td title="@post.Id">@post.Title</td>
+        <td>@post.Body</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}
+
+@code {
+  // see https://blog.logrocket.com/blazor-server-vs-react-minimize-javascript/
+  private IEnumerable<BlogPost> _posts = Enumerable.Empty<BlogPost>();
+
+  protected override async Task OnInitializedAsync()
+  {
+    _posts = await Http.GetFromJsonAsync<IEnumerable<BlogPost>>("https://jsonplaceholder.typicode.com/posts") ?? Enumerable.Empty<BlogPost>();
+    Console.WriteLine(_posts);
+  }
+
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+  public record BlogPost(
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("title")] string Title,
+    [property: JsonPropertyName("body")] string Body);
+}
