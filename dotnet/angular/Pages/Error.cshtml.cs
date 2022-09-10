@@ -11,7 +11,7 @@ public class ErrorModel : PageModel
 
     public ErrorModel(ILogger<ErrorModel> logger)
     {
-        _logger = logger;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public string? RequestId { get; set; }

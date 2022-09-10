@@ -1,0 +1,47 @@
+﻿@page "/posts"
+@using contracts.Posts
+<PageTitle>Blog Posts</PageTitle>
+@inject IProvidePosts Posts
+
+<h1>Blog Posts</h1>
+
+<p>This component demonstrates fetching blog posts from a service.</p>
+
+@if (!_posts.Any())
+{
+  <p>
+    <em>Loading...</em>
+  </p>
+}
+else
+{
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var post in _posts)
+    {
+      <tr>
+            <td>@post.Id</td>
+        <td title="@post.Id">@post.Title</td>
+        <td>@post.Body</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}
+
+@code {
+  // see https://blog.logrocket.com/blazor-vs-react-minimize-javascript/
+  private IEnumerable<BlogPost> _posts = Enumerable.Empty<BlogPost>();
+
+  protected override async Task OnInitializedAsync()
+  {
+      _posts = await Posts.GetPosts();
+  }
+}

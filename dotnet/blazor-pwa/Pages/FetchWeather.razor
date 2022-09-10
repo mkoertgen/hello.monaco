@@ -1,12 +1,12 @@
-﻿@page "/fetchdata"
-@using System.Diagnostics.CodeAnalysis
-@inject HttpClient Http
+﻿@page "/weather"
+@using contracts.Weather
 
 <PageTitle>Weather forecast</PageTitle>
+@inject IProvideWeather Forecasts
 
 <h1>Weather forecast</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>This component demonstrates fetching weather data from a service.</p>
 
 @if (!_forecasts.Any())
 {
@@ -42,12 +42,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json") ?? Enumerable.Empty<WeatherForecast>();
-    }
-
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public record WeatherForecast(DateTime Date, int TemperatureC, string Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        _forecasts = await Forecasts.GetForecast(DateTime.Now);
     }
 }

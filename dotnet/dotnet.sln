@@ -7,11 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor-pwa", "blazor-pwa\bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "razor", "razor\razor.csproj", "{D1D34986-1222-4353-8307-64D5480D5A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor-server", "blazor-server\blazor-server.csproj", "{3AC8B2A0-B157-4C11-A8BB-040870A4C814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor", "blazor\blazor.csproj", "{3AC8B2A0-B157-4C11-A8BB-040870A4C814}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "angular", "angular\angular.csproj", "{ABD73D87-A4AE-4995-BAED-8815665872F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "react", "react\react.csproj", "{BACAF062-7DD8-4AF7-9A28-42CC2FE39DC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common", "common\common.csproj", "{8391E325-98DF-4314-89FA-F7B2192716EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "contracts", "contracts\contracts.csproj", "{ACA3FE3C-7698-4FF9-8948-78241688755E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +46,13 @@ Global
 		{BACAF062-7DD8-4AF7-9A28-42CC2FE39DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BACAF062-7DD8-4AF7-9A28-42CC2FE39DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BACAF062-7DD8-4AF7-9A28-42CC2FE39DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8391E325-98DF-4314-89FA-F7B2192716EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8391E325-98DF-4314-89FA-F7B2192716EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8391E325-98DF-4314-89FA-F7B2192716EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8391E325-98DF-4314-89FA-F7B2192716EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA3FE3C-7698-4FF9-8948-78241688755E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA3FE3C-7698-4FF9-8948-78241688755E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA3FE3C-7698-4FF9-8948-78241688755E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA3FE3C-7698-4FF9-8948-78241688755E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
