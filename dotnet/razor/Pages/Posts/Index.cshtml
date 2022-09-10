@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Blog Posts</h1>
+
+<p>This component demonstrates fetching blog posts from a service.</p>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Body</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var post in Model.Posts)
+        {
+            <tr>
+                <td>@post.Id</td>
+                <td title="@post.Id">@post.Title</td>
+                <td>@post.Body</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

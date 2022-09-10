@@ -1,19 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using contracts.Posts;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace razor.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly IProvidePosts _provider;
+    private readonly List<BlogPost> _posts = Enumerable.Empty<BlogPost>().ToList();
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(IProvidePosts provider)
     {
-        _logger = logger;
+        _provider = provider ?? throw new ArgumentNullException(nameof(provider));
     }
 
-    public void OnGet()
-    {
+    public IEnumerable<BlogPost> Posts => _posts;
 
+    public async Task OnGet()
+    {
+        _posts.Clear();
+        _posts.AddRange(await _provider.GetPosts());
     }
 }

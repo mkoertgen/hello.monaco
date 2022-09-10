@@ -1,0 +1,35 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Weather";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Blog Posts</h1>
+
+<p>This component demonstrates fetching weather from a service.</p>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach (var forecast in Model.Forecasts)
+        {
+            <tr>
+                <td>@forecast.Date</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
