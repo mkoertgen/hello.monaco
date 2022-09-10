@@ -1,7 +1,22 @@
+using Autofac.Extensions.DependencyInjection;
+using contracts.Settings;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+// Add AutoFac: https://stackoverflow.com/questions/69754985/adding-autofac-to-net-core-6-0-using-the-new-single-file-template
+builder.Host
+    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureAppConfiguration((_, config) => config.AddEnvironmentVariables());
+
+// 1. Register Autofac/AspNetModules
+var modules = builder.UseModules()
+    .With(new SettingsModule(builder.Configuration))
+    .Scanning(new []{typeof(Program).Assembly, typeof(SettingsModule).Assembly})
+    .Build();
 
 var app = builder.Build();
 
@@ -15,11 +30,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
+
+// 2. Use Autofac/AspNetModules
+modules.Use(app);
+
 
 app.Run();

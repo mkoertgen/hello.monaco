@@ -3,7 +3,7 @@
 namespace contracts.Posts;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PostsController : ControllerBase
 {
     private readonly IProvidePosts _service;

@@ -10,6 +10,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IProvideWeather, JsonWeather>(sp => new JsonWeather(sp.GetService<HttpClient>()!, "sample-data/weather.json"));
-builder.Services.AddScoped<IProvidePosts, JsonPosts>(sp => new JsonPosts(sp.GetService<HttpClient>()!, "sample-data/posts.json"));
+builder.Services.AddScoped<IProvidePosts, MockPosts>();
 
 await builder.Build().RunAsync();

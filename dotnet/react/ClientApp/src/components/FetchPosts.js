@@ -50,7 +50,7 @@ export class FetchPosts extends Component {
   }
 
   async populatePosts() {
-    const response = await fetch('posts');
+    const response = await fetch('api/posts');
     const data = await response.json();
     this.setState({ posts: data, loading: false });
   }

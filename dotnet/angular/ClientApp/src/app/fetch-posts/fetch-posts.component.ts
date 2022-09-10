@@ -9,9 +9,11 @@ export class FetchPostsComponent {
   public posts: BlogPost[] = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<BlogPost[]>(baseUrl + 'posts').subscribe(result => {
-      this.posts = result;
-    }, error => console.error(error));
+    const url = `${baseUrl}api/posts`;
+    http.get<BlogPost[]>(url).subscribe({
+      next: result => { this.posts = result; },
+      error: err => console.error(err)
+    });
   }
 }
 
