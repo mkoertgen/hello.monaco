@@ -2,7 +2,10 @@
 
 Experimenting with [Monaco Editor](https://microsoft.github.io/monaco-editor/).
 
-- [demo](./demo/README.md) - Simple Monaco Editor demo
+## Examples
+
+- [examples](./examples/README.md) - Original Monaco Editor YAML examples
+- [dotnet](./dotnet/README.md) - Bundling Monaco Editor with .NET
 
 ## Links
 
