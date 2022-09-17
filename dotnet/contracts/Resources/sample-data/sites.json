@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "dev-1",
+    "config": "all: \\n  vars: \\n    stage: dev \\n  children: \\n    gateway: \\n      hosts: \\n        dev-1: \\n          ansible_host: 192.168.1.101 \\n      vars: \\n        iotHub: \\n          enabled: true \\n          name: my-iot-hub \\n          device: \\n            id: MyDevice01 \\n            key: MyDevice01Key \\n        elastic: \\n          enabled: true \\n          hosts: https://elastic.mycloud.com:443 \\n          username: dev-1 \\n          password: SuperSecret1"
+  },
+  {
+    "id": 2,
+    "name": "dev-2",
+    "config": "all: \\n  vars: \\n    stage: dev \\n  children: \\n    gateway: \\n      hosts: \\n        dev-2: \\n          ansible_host: 192.168.1.102 \\n      vars: \\n        iotHub: \\n          enabled: true \\n          name: my-iot-hub \\n          device: \\n            id: MyDevice02 \\n            key: MyDevice02Key \\n        elastic: \\n          enabled: true \\n          hosts: https://elastic.mycloud.com:443 \\n          username: dev-2 \\n          password: SuperSecret2"
+  }
+]

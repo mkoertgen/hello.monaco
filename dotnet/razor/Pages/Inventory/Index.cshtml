@@ -1,0 +1,43 @@
+﻿@page
+@model razor.Pages.Inventory.Index
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>All Sites</h1>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var site in Model.Sites)
+        {
+            <tr>
+                <td>@site.Id</td>
+                <td title="@site.Id">@site.Name</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a asp-page="./Details" asp-route-id="@site.Id" title="Details" class="btn">
+                            <i class="fas fa-file-lines"></i>
+                        </a>
+                        <a asp-page="./Edit" asp-route-id="@site.Id" title="Edit" class="btn">
+                            <i class="fas fa-pen-to-square"></i>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@site.Id" title="Delete" class="btn text-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

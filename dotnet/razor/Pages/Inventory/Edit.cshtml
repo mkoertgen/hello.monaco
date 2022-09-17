@@ -1,0 +1,94 @@
+﻿@page
+@model razor.Pages.Inventory.Edit
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Inventory - Edit</h1>
+
+<form method="post" id="editForm">
+
+    <div class="row mt-4">
+        <div class="col-md-5 d-flex justify-content-start">
+            <div>
+                <a asp-page="./Index"><i class="fas fa-arrow-left"></i>Back to List</a>
+            </div>
+        </div>
+        <div class="col-md-7 d-flex justify-content-end">
+            <div class="form-group mt-2">
+                <button id="btn_save" type="submit" asp-page-handler="save" class="btn btn-primary" title="Save">
+                    <i class="fas fa-floppy-disk"></i><span>Save</span>
+                </button>
+                <button type="reset" class="btn btn-secondary" title="Reset to default">
+                    <i class="fas fa-file-slash"></i><span>Reset</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div id="site">
+            <div class="card card-body">
+                <h5>Site</h5>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Site.Id"/>
+                <input type="hidden" asp-for="Site.Config"/>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label asp-for="Site.Name" class="control-label"></label>
+                        <input asp-for="Site.Name" class="form-control"/>
+                        <span asp-validation-for="Site.Name" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div id="config">
+            <div class="card card-body">
+                <h5>Config</h5>
+                <div id="editor" style="width: 100%; height: 600px;"></div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/dist/editor.entry.js"></script>
+
+    <!--suppress JSUnresolvedVariable -->
+    <script>
+        const yamlValue = `@Html.Raw(Model.Site.Config)`;
+        // Access module export via webpack library output, cf.: https://stackoverflow.com/a/52923799/2592915
+        const Editor = editorLibrary.default;
+        const ed = new Editor("editor", yamlValue);
+
+        // https://www.mediaevent.de/javascript/onreset-onsubmit.html
+        const form = document.getElementById('editForm');
+        form.onsubmit = function(evt) {
+            //console.log(ed.getValue());
+            if (!ed.isValid()) {
+                evt.preventDefault();
+                return false;
+            }
+            document.getElementById("Site_Config").value = ed.getValue();
+        }
+
+        form.onreset = function() {
+            if (!window.confirm('Clear all changes?'))
+                return false;
+        }
+
+        const btnSave = document.getElementById('btn_save');
+        ed.onChangedValid(() => {
+            const valid = ed.isValid();
+            btnSave.disabled = !valid
+            btnSave.title = valid ? "Save": `Invalid Config: ${ed.getValidationErrors()}`;
+        });
+
+    </script>
+}

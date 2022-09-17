@@ -1,0 +1,158 @@
+{
+  "$defs": {
+    "group": {
+      "description": "A (named) Ansible group",
+      "additionalProperties": false,
+      "properties": {
+        "children": { "$ref": "#/$defs/children" },
+        "hosts": { "$ref": "#/$defs/hosts" },
+        "vars": {
+          "$ref": "#/$defs/vars-cloud"
+        }
+      },
+      "type": ["object", "null"]
+    },
+    "special-group": {
+      "additionalProperties": false,
+      "properties": {
+        "children": { "$ref": "#/$defs/children" },
+        "groups": { "$ref": "#/$defs/group" },
+        "hosts": { "$ref": "#/$defs/hosts" },
+        "vars": { "$ref": "#/$defs/vars-cloud" }
+      },
+      "type": "object"
+    },
+    "children": {
+      "description": "List of groups that are children of this group",
+      "patternProperties": {
+        "[a-zA-Z-_0-9]": {
+          "$ref": "#/$defs/group"
+        }
+      },
+      "type": ["object", "null"]
+    },
+    "hosts": {
+      "description": "Hosts in a group",
+      "patternProperties": {
+        "[a-zA-Z.-_0-9]": {
+          "type": ["object"],
+          "properties": {
+            "ansible_host": {
+              "type": "string",
+              "format": "ipv4",
+              "description": "Host name (usually ipv4)",
+              "pattern": "^(?:[0-9]{1,3}.){3}[0-9]{1,3}$"
+            }
+          }
+        }
+      },
+      "type": ["object", "string"]
+    },
+    "vars-cloud": {
+      "description": "Variables for a group",
+      "unevaluatedProperties": false,
+      "allOf": [{ "$ref": "#/$defs/vars-common" }, { "$ref": "#/$defs/vars-a" }],
+      "type": "object"
+    },
+    "vars-common": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "description": "The deployment stage",
+          "type": "string",
+          "default": "dev",
+          "enum": ["dev", "stage", "prod"],
+          "examples": ["dev", "stage", "prod"]
+        }
+      }
+    },
+    "vars-a": {
+      "type": "object",
+      "properties": {
+        "iotHub": { "$ref": "#/$defs/config-iothub" },
+        "elastic": { "$ref": "#/$defs/config-elastic" }
+      }
+    },
+    "config-iothub": {
+      "type": "object",
+      "description": "IoT Hub configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "description": "Enable connection to Azure IoT Hub",
+          "type": "boolean",
+          "default": "false"
+        },
+        "name": {
+          "description": "The name of the Azure IoT Hub",
+          "type": "string",
+          "default": "iot-hub-name",
+          "examples": ["iot-hub-name"]
+        },
+        "device": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "Device ID for connection to Azure IoT Hub via MQTT",
+              "type": "string",
+              "default": "<your device ID here>",
+              "examples": ["MyDevice01"]
+            },
+            "key": {
+              "description": "Device Key for connection to Azure IoT Hub via MQTT",
+              "type": "string",
+              "default": "<your device key here>",
+              "examples": ["<your device key here>"]
+            }
+          }
+        }
+      }
+    },
+    "config-elastic": {
+      "type": "object",
+      "description": "Elasticsearch configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "description": "Enable connection to Elasticsearch",
+          "type": "boolean",
+          "default": "true"
+        },
+        "hosts": {
+          "description": "Elasticsearch hosts",
+          "type": "string",
+          "default": "https://elastic:9200",
+          "examples": ["https://elastic:9200"],
+          "pattern": "^(http(s)?)://.+$"
+        },
+        "username": {
+          "description": "Elasticsearch username (machine serial number)",
+          "type": "string",
+          "default": "elastic",
+          "examples": ["elastic"]
+        },
+        "password": {
+          "description": "Elasticsearch password (usually by secret)",
+          "type": "string",
+          "default": "SuperSecret",
+          "examples": ["NotAGoodExample"]
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Cloud Inventory Schema",
+  "examples": ["inventory.yaml", "inventory.yml", "inventory/*.yml", "inventory/*.yaml"],
+  "markdownDescription": "All keys at top levels are groups with `all` and `ungrouped` having a special meaning.\n\nSee [How to build your inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)",
+  "properties": {
+    "all": {
+      "$ref": "#/$defs/special-group"
+    },
+    "ungrouped": {
+      "$ref": "#/$defs/group"
+    }
+  },
+  "title": "Cloud Inventory Schema",
+  "type": "object"
+}

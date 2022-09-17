@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 
-namespace contracts.Posts;
+namespace contracts;
 
 public class JsonProvider<T> : IProvide<T>
 {

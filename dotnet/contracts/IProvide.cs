@@ -1,4 +1,4 @@
-﻿namespace contracts.Posts;
+﻿namespace contracts;
 
 public interface IProvide<T>
 {

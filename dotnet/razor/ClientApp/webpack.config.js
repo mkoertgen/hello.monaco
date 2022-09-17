@@ -1,7 +1,16 @@
-import HtmlWebPackPlugin from "html-webpack-plugin";
 import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
+import path from "path";
 
 export default {
+  entry: {
+    editor: "./src/editor.js",
+  },
+  output: {
+    path: path.resolve("..", "wwwroot", "dist"),
+    filename: "[name].entry.js",
+    library: "[name]Library",
+  },
+  mode: "development",
   module: {
     rules: [
       {
@@ -19,7 +28,6 @@ export default {
     ],
   },
   plugins: [
-    new HtmlWebPackPlugin(),
     new MonacoWebpackPlugin({
       languages: ["yaml"],
       customLanguages: [
