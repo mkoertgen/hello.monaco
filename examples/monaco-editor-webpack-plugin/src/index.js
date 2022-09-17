@@ -1,8 +1,12 @@
 import { editor, Uri } from 'monaco-editor';
 import { setDiagnosticsOptions } from 'monaco-yaml';
 
-// The uri is used for the schema file match.
-const modelUri = Uri.parse('a://b/foo.yaml');
+import defaultSchemaUri from './schema-inventory.json';
+
+const defaultSchema = {
+  uri: defaultSchemaUri,
+  fileMatch: ['my-inventory.yaml'],
+};
 
 setDiagnosticsOptions({
   enableSchemaRequest: true,
@@ -10,43 +14,33 @@ setDiagnosticsOptions({
   completion: true,
   validate: true,
   format: true,
-  schemas: [
-    {
-      // Id of the first schema
-      uri: 'http://myserver/foo-schema.json',
-      // Associate with our model
-      fileMatch: [String(modelUri)],
-      schema: {
-        type: 'object',
-        properties: {
-          p1: {
-            enum: ['v1', 'v2'],
-          },
-          p2: {
-            // Reference the second schema
-            $ref: 'http://myserver/bar-schema.json',
-          },
-        },
-      },
-    },
-    {
-      // Id of the first schema
-      uri: 'http://myserver/bar-schema.json',
-      schema: {
-        type: 'object',
-        properties: {
-          q1: {
-            enum: ['x1', 'x2'],
-          },
-        },
-      },
-    },
-  ],
+  schemas: [defaultSchema],
 });
 
-const value = 'p1: \np2: \n';
+const value = `all:
+  vars:
+    stage: dev
+  children:
+    gateway:
+      hosts:
+        my-gateway:
+          ansible_host: 192.168.1.101
+      vars:
+        iotHub: 
+          enabled: true
+          name: my-iot-hub
+          device:
+            id: MyDevice01
+            key: MyDevice01Key
+        elastic:
+          enabled: true
+          hosts: https://elastic.mycloud.com:443
+          username: my-gateway
+          password: SuperSecret
+`;
 
 editor.create(document.getElementById('editor'), {
   automaticLayout: true,
-  model: editor.createModel(value, 'yaml', modelUri),
+  model: editor.createModel(value, 'yaml', Uri.parse('my-inventory.yaml')),
+  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'vs-dark' : 'vs-light',
 });
