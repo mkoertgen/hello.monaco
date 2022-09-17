@@ -1,4 +1,6 @@
-import { editor, Uri } from "monaco-editor";
+// optimization: https://github.com/microsoft/monaco-editor-webpack-plugin/issues/117
+//import { editor, Uri } from "monaco-editor";
+import { editor, Uri } from "monaco-editor/esm/vs/editor/editor.api.js";
 import { setDiagnosticsOptions } from "monaco-yaml";
 
 import schemaUrl from "./schema-inventory.json";

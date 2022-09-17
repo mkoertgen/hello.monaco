@@ -1,5 +1,5 @@
-import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 import path from "path";
+import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 
 export default {
   entry: {
