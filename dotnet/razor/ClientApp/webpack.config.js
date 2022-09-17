@@ -5,6 +5,14 @@ export default {
   entry: {
     editor: "./src/editor.js",
   },
+  performance: {
+    //hints: true,
+    assetFilter: function(asset) {
+      // monaco-editor is big! Skip warnings for it.
+      const toSkip = ['editor.entry.js', 'yaml.worker.js'];
+      return !toSkip.some((s) => asset.includes(s));
+    }
+  },
   output: {
     path: path.resolve("..", "wwwroot", "dist"),
     filename: "[name].entry.js",
